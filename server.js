@@ -20,7 +20,6 @@ router.get('/quotes/random', (req, res, next) => {
 
 //GET all Quotes and GET person query
 router.get('/quotes', (req, res, next) => {
-    //console.log(req.query);
     let result = [];
     if (req.query.person) {
         const person = req.query.person;
@@ -32,5 +31,17 @@ router.get('/quotes', (req, res, next) => {
         }
     } else {
         res.status(200).send({ quotes: quotes})
+    }
+})
+
+//POST a quote
+router.post('/quotes', (req, res, next) => {
+    const addPerson = req.query.person;
+    const addQuote = req.query.quote;
+    if(addPerson && addQuote){
+        quotes.push({ quote: addQuote, person: addPerson });
+    res.send({ quote: { quote: addQuote, person: addPerson } });
+  } else {
+    res.status(400);
     }
 })
